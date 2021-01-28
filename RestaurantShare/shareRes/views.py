@@ -5,8 +5,10 @@ from .models import *
 
 # Create your views here.
 def index(request):
+    categories =Category.objects.all()
+    content = {'categories':categories}
     # return HttpResponse("index")
-    return render(request, 'shareRes/index.html')
+    return render(request, 'shareRes/index.html', content)
 
 def restaurantDetail(request):
     # return HttpResponse("restaurantDetail")
@@ -17,8 +19,10 @@ def restaurantCreate(request):
     return render(request, 'shareRes/restaurantCreate.html')
 
 def categoryCreate(request):
+    categories = Category.objects.all()
+    content = {'categories':categories}
     # return HttpResponse("categoryCreate")
-    return render(request, 'shareRes/categoryCreate.html')
+    return render(request, 'shareRes/categoryCreate.html', content)
 
 def Create_category(request):
     category_name = request.POST['categoryName']
