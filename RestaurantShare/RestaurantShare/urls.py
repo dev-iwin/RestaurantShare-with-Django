@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
+# url 별로 각 app에 처리를 넘김
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', include('shareRes.urls')),
+    path('sendEmail/', include('sendEmail.urls')),
+    path('admin/', admin.site.urls)
 ]
