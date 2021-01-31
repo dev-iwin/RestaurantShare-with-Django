@@ -25,7 +25,7 @@ SECRET_KEY = '8bc!gpt5yfrnr&4@o$re+ovbdkd&4fc5un8ylr=u!lsbt=+m-j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["deviwin.oythonanywhere.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["deviwin.pythonanywhere.com", "127.0.0.1", "localhost"]
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
