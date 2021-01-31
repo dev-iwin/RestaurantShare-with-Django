@@ -3,8 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import *
 
-
-# Create your views here.
 def index(request):
     categories = Category.objects.all()
     restaurants = Restaurant.objects.all()
@@ -12,6 +10,23 @@ def index(request):
     # return HttpResponse("index")
     return render(request, 'shareRes/index.html', content)
 
+def restaurantCreate(request):
+    categories = Category.objects.all()
+    content = {'categories': categories}
+    # return HttpResponse("restaurantCreate")
+    return render(request, 'shareRes/restaurantCreate.html', content)
+
+def Create_restaurant(request):
+    category_id = request.POST['resCategory']
+    category = Category.objects.get(id=category_id)
+    name = request.POST['resTitle']
+    link = request.POST['resLink']
+    content = request.POST['resContent']
+    keyword = request.POST['resLoc']
+    new_res = Restaurant(category=category, restaurant_name=name, restaurant_link=link, restaurant_content=content,
+                         restaurant_keyword=keyword)
+    new_res.save()
+    return HttpResponseRedirect(reverse('index'))
 
 def restaurantDetail(request, res_id):
     restaurant = Restaurant.objects.get(id=res_id)
@@ -19,27 +34,11 @@ def restaurantDetail(request, res_id):
     # return HttpResponse("restaurantDetail")
     return render(request, 'shareRes/restaurantDetail.html', content)
 
-
-def restaurantCreate(request):
-    categories = Category.objects.all()
-    content = {'categories': categories}
-    # return HttpResponse("restaurantCreate")
-    return render(request, 'shareRes/restaurantCreate.html', content)
-
-
 def restaurantUpdate(request, res_id):
     categories = Category.objects.all()
     restaurant = Restaurant.objects.get(id=res_id)
     content = {'categories': categories, 'restaurant': restaurant}
     return render(request, 'shareRes/restaurantUpdate.html', content)
-
-
-def Delete_restaurant(request):
-    res_id = request.POST['resId']
-    restaurant = Restaurant.objects.get(id=res_id)
-    restaurant.delete()
-    return HttpResponseRedirect(reverse('index'))
-
 
 def Update_restaurant(request):
     resId = request.POST['resId']
@@ -58,19 +57,11 @@ def Update_restaurant(request):
     before_restaurant.save()
     return HttpResponseRedirect(reverse('resDetailPage', kwargs={'res_id': resId}))
 
-
-def Create_restaurant(request):
-    category_id = request.POST['resCategory']
-    category = Category.objects.get(id=category_id)
-    name = request.POST['resTitle']
-    link = request.POST['resLink']
-    content = request.POST['resContent']
-    keyword = request.POST['resLoc']
-    new_res = Restaurant(category=category, restaurant_name=name, restaurant_link=link, restaurant_content=content,
-                         restaurant_keyword=keyword)
-    new_res.save()
+def Delete_restaurant(request):
+    res_id = request.POST['resId']
+    restaurant = Restaurant.objects.get(id=res_id)
+    restaurant.delete()
     return HttpResponseRedirect(reverse('index'))
-
 
 def categoryCreate(request):
     categories = Category.objects.all()
@@ -78,14 +69,12 @@ def categoryCreate(request):
     # return HttpResponse("categoryCreate")
     return render(request, 'shareRes/categoryCreate.html', content)
 
-
 def Create_category(request):
     category_name = request.POST['categoryName']
     new_category = Category(category_name=category_name)
     new_category.save()
     return HttpResponseRedirect(reverse('index'))
     # return HttpResponse("여기서 category Create 기능을 구현할거야.")
-
 
 def Delete_category(request):
     category_id = request.POST['categoryId']
