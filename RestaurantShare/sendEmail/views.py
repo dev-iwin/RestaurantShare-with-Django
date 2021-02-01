@@ -27,9 +27,9 @@ def sendEmail(request):
         msg = EmailMessage(subject=inputTitle, body=msg_html, from_email="userid@gmail.com", bcc=inputReceiver.split(','))
         msg.content_subtype = 'html'
         msg.send()
-        return HttpResponseRedirect(reverse('index'))
+        return render(request, 'sendEmail/send_success.html')
     except:
-        return render(request, 'sendEmail/sendFail.html')
+        return render(request, 'sendEmail/send_fail.html')
 
 
 # def sendEmail(request):
